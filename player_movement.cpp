@@ -9,6 +9,7 @@ int main(void)
     initscr();
     noecho();
     cbreak();
+    curs_set(0);
 
     // get screen dimensions
     int colMax, rowMax;
@@ -20,7 +21,7 @@ int main(void)
     refresh();
     wrefresh(gamewin);
 
-    Player* p = new Player(gamewin, 1, 1, '^');
+    Player* p = new Player(gamewin, 18, 25, '^');
     
     do {
         p->display();

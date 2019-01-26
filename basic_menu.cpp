@@ -7,6 +7,7 @@ int main(int argc, char **argv)
     initscr();
     noecho();
     cbreak();
+    curs_set(0);
 
     // Get screen size
     int rowMax, colMax;
