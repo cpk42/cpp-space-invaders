@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "player.hpp"
+#include "enemy.hpp"
 
 int main(void)
 {
@@ -22,9 +23,11 @@ int main(void)
     wrefresh(gamewin);
 
     Player* p = new Player(gamewin, 18, 25, '^');
+    Enemy* e = new Enemy(gamewin, 1, 1, 'o', 1);
     
     do {
         p->display();
+        e->display();
         wrefresh(gamewin);
     } while(p->getMove() != 'x');
 

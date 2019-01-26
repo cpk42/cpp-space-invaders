@@ -10,6 +10,10 @@ Player::Player(WINDOW* win, int row, int col, char c) {
     keypad(cur_win, true);
 }
 
+Player::~Player(void) {
+    
+}
+
 void Player::moveUp() {
     mvwaddch(cur_win, row_location, col_location, '.');
     row_location = --row_location < 1 ? 1 : row_location;
