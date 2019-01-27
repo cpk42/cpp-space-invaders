@@ -3,33 +3,28 @@
 
 #include "player.hpp"
 #include "enemy.hpp"
+#include "game.hpp"
+
+int check_collision(int playerRow, int playerCol, int enemyRow, int enemyCol) {
+    if (playerRow == enemyRow && enemyRow == enemyCol)
+        return 1;
+    return 0;
+}
 
 int main(void)
 {
-    // init ncurses
-    initscr();
-    noecho();
-    cbreak();
-    curs_set(0);
 
-    // get screen dimensions
-    int colMax, rowMax;
-    getmaxyx(stdscr, colMax, rowMax);
-
-    // create window for user input
-    WINDOW* gamewin = newwin(20, 50, (colMax / 2) - 10, 10);
-    box(gamewin, 0, 0);
-    refresh();
-    wrefresh(gamewin);
-
-    Player* p = new Player(gamewin, 18, 25, '^');
-    Enemy* e = new Enemy(gamewin, 1, 1, 'o', 1);
+    Game* g = new Game();
+    Player* p = new Player(g->getGameWin(), 18, 25, '^');
+    Enemy* e = new Enemy(g->getGameWin(), 1, 1, 'o', 1);
     
     do {
         p->display();
         e->display();
-        wrefresh(gamewin);
+        //check_collision(p->getRow(), p->getCol(), e->getRow(), e->getCol()) == 1 ? mvwprintw(gamewin, 1, 1, "collision") : 0;
+        wrefresh(g->getDisplayWin());
     } while(p->getMove() != 'x');
+
 
     // free ncruses window
     endwin();

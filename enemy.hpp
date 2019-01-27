@@ -15,6 +15,9 @@ class Enemy {
         void display();
         void moveSideToSide();
 
+        int getRow(void);
+        int getCol(void);
+
     private:
         int row_location, col_location;
         int row_max, col_max;

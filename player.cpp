@@ -15,22 +15,22 @@ Player::~Player(void) {
 }
 
 void Player::moveUp() {
-    mvwaddch(cur_win, row_location, col_location, '.');
+    mvwaddch(cur_win, row_location, col_location, ' ');
     row_location = --row_location < 1 ? 1 : row_location;
 }
 
 void Player::moveDown() {
-    mvwaddch(cur_win, row_location, col_location, '.');
+    mvwaddch(cur_win, row_location, col_location, ' ');
     row_location = ++row_location > row_max - 2 ? row_max - 2 : row_location;
 }
 
 void Player::moveLeft() {
-    mvwaddch(cur_win, row_location, col_location, '.');
+    mvwaddch(cur_win, row_location, col_location, ' ');
     col_location = --col_location < 1 ? 1 : col_location; 
 }
 
 void Player::moveRight() {
-    mvwaddch(cur_win, row_location, col_location, '.');
+    mvwaddch(cur_win, row_location, col_location, ' ');
     col_location = ++col_location > col_max - 2 ? col_max - 2 : col_location;
 }
 
@@ -57,4 +57,12 @@ int Player::getMove() {
 
 void Player::display() {
     mvwaddch(cur_win, row_location, col_location, character);
+}
+
+int Player::getRow() {
+    return row_location;
+}
+
+int Player::getCol() {
+    return col_location;
 }

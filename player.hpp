@@ -15,6 +15,9 @@ class Player {
         int getMove();
         void display();
 
+        int getRow();
+        int getCol();
+
     private:
         int row_location, col_location;
         int row_max, col_max;

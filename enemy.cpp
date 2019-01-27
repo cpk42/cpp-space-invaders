@@ -36,16 +36,20 @@ void Enemy::moveRight() {
 }
 
 void Enemy::display() {
-    if (direction == 1) {
-        moveRight();
-    } else {
-        moveLeft();
-    }
+    direction == 1 ? moveRight() : moveLeft();
+
     if (col_location == col_max - 2 || col_location == 1) {
         direction *= -1;
         moveDown();
     }
 
-    
     mvwaddch(cur_win, row_location, col_location, character);
+}
+
+int Enemy::getRow() {
+    return row_location;
+}
+
+int Enemy::getCol() {
+    return col_location;
 }
