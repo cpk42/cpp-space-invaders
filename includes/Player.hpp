@@ -14,15 +14,20 @@ class Player {
         void moveRight();
         int getMove();
         void display();
+        void shoot();
+        void fire();
 
         int getRow();
         int getCol();
+        int isShooting();
 
     private:
         int row_location, col_location;
         int row_max, col_max;
+        int is_shooting;
         char character;
         WINDOW* cur_win;
+        Projectile *projectile;
 };
 
 #endif

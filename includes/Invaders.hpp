@@ -7,3 +7,4 @@
 #include <Game.hpp>
 #include <Menu.hpp>
 #include <Player.hpp>
+#include <Projectile.hpp>

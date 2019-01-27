@@ -19,6 +19,8 @@ int main(void)
             if (e_arr[i]->isValid())
                 e_arr[i]->display(g);
        }
+       // while (p->isShooting())
+       //  p->fire();
         p->display();
         g->checkResize();
         if (g->getLives() == 0) {

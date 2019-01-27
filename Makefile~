@@ -4,7 +4,6 @@ SRC_CLASS = Enemy.cpp \
 		Game.cpp \
 		Menu.cpp \
 		Player.cpp \
-		Projectile.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 OBJ_CLASS = $(SRC_CLASS:.cpp=.o)

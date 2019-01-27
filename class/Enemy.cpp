@@ -7,7 +7,7 @@ Enemy::Enemy(WINDOW* win, int row, int col, char c, int d) {
     character = c;
     direction = d;
     valid = 1;
-    
+
     getmaxyx(cur_win, row_max, col_max);
 }
 
@@ -27,7 +27,7 @@ void Enemy::moveDown() {
 
 void Enemy::moveLeft() {
     mvwaddch(cur_win, row_location, col_location, ' ');
-    col_location = --col_location < 1 ? 1 : col_location; 
+    col_location = --col_location < 1 ? 1 : col_location;
 }
 
 void Enemy::moveRight() {
@@ -47,8 +47,7 @@ void Enemy::display(Game* g) {
         direction *= -1;
         moveDown();
     }
-
-    if (row_location == row_max - 2)
+    if (row_location == row_max - 2 || mvwinch(cur_win, row_location, col_location) == 'x')
     {
         g->setLives(g->getLives() - 1);
         valid = 0;
@@ -79,7 +78,7 @@ void Enemy::deathAnimation() {
     mvwaddch(cur_win, row_location, col_location, 'X');
     wrefresh(cur_win);
     wattroff(cur_win, COLOR_PAIR(1));
-    mvwaddch(cur_win, row_location, col_location, ' ');    
+    mvwaddch(cur_win, row_location, col_location, ' ');
 }
 
 int Enemy::getRow() {

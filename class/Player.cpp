@@ -5,14 +5,16 @@ Player::Player(WINDOW* win, int row, int col, char c) {
     row_location = row;
     col_location = col;
     character = c;
-    
+    is_shooting = 0;
+    projectile = new Projectile(win, 0, 0, 'x');
+
     getmaxyx(cur_win, row_max, col_max);
     keypad(cur_win, true);
     halfdelay(1);
 }
 
 Player::~Player(void) {
-    
+
 }
 
 void Player::moveUp() {
@@ -27,12 +29,19 @@ void Player::moveDown() {
 
 void Player::moveLeft() {
     mvwaddch(cur_win, row_location, col_location, ' ');
-    col_location = --col_location < 1 ? 1 : col_location; 
+    col_location = --col_location < 1 ? 1 : col_location;
 }
 
 void Player::moveRight() {
     mvwaddch(cur_win, row_location, col_location, ' ');
     col_location = ++col_location > col_max - 2 ? col_max - 2 : col_location;
+}
+
+void Player::fire() {
+  is_shooting = 1;
+  Projectile* node = new Projectile(cur_win, row_location, col_location, 'x');
+  node->next = projectile;
+  projectile = node;
 }
 
 int Player::getMove() {
@@ -50,6 +59,9 @@ int Player::getMove() {
         case KEY_RIGHT:
             moveRight();
             break;
+        case ' ':
+            fire();
+            break;
         default:
             break;
     }
@@ -57,6 +69,13 @@ int Player::getMove() {
 }
 
 void Player::display() {
+    if (isShooting()) {
+      Projectile *ptr = projectile;
+      while (ptr->next) {
+        ptr->fire();
+        ptr = ptr->next;
+      }
+    }
     getmaxyx(cur_win, row_max, col_max);
     if (row_location >= row_max)
         row_location = row_max - 2;
@@ -71,4 +90,11 @@ int Player::getRow() {
 
 int Player::getCol() {
     return col_location;
+}
+
+int Player::isShooting() {
+    if (is_shooting > 0)
+      return (1);
+    else
+      return (0);
 }
