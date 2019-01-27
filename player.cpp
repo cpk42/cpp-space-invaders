@@ -56,6 +56,11 @@ int Player::getMove() {
 }
 
 void Player::display() {
+    getmaxyx(cur_win, row_max, col_max);
+    if (row_location >= row_max)
+        row_location = row_max - 2;
+    if (col_location >= col_max)
+        col_location = col_max / 2;
     mvwaddch(cur_win, row_location, col_location, character);
 }
 

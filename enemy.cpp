@@ -8,7 +8,6 @@ Enemy::Enemy(WINDOW* win, int row, int col, char c, int d) {
     direction = d;
     
     getmaxyx(cur_win, row_max, col_max);
-    keypad(cur_win, true);
 }
 
 Enemy::~Enemy(void) {
@@ -36,6 +35,11 @@ void Enemy::moveRight() {
 }
 
 void Enemy::display() {
+    getmaxyx(cur_win, row_max, col_max);
+    if (row_location >= row_max)
+        row_location = row_max - row_location;
+    if (col_location >= col_max)
+        col_location = col_max - col_location;
     direction == 1 ? moveRight() : moveLeft();
 
     if (col_location == col_max - 2 || col_location == 1) {
