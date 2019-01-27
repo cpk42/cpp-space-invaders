@@ -4,6 +4,6 @@
 #include <iostream>
 
 #include <Enemy.hpp>
-#include "Game.hpp"
-#include "Menu.hpp"
-#include "Player.hpp"
+#include <Game.hpp>
+#include <Menu.hpp>
+#include <Player.hpp>
