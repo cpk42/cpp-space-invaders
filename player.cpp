@@ -8,6 +8,7 @@ Player::Player(WINDOW* win, int row, int col, char c) {
     
     getmaxyx(cur_win, row_max, col_max);
     keypad(cur_win, true);
+    halfdelay(1);
 }
 
 Player::~Player(void) {

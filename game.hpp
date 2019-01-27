@@ -18,7 +18,11 @@ class Game {
         void displayWinInfo(void);
         int getColMax(void);
         int getRowMax(void);
+        int getLives(void);
+
+
         void setDifficulty(std::string diff);
+        void setLives(int lives);
 
     private:
         int colMax;

@@ -13,6 +13,10 @@ Game::Game(std::string diff) {
     cbreak();
     curs_set(0);
 
+    // Colors
+    start_color();
+    init_pair(1, COLOR_WHITE, COLOR_RED);
+
     // get screen dimensions
     getmaxyx(stdscr, rowMax, colMax);
 
@@ -98,6 +102,14 @@ int Game::getColMax(void) {
     return colMax;
 }
 
+int Game::getLives(void) {
+    return lives;
+}
+
 void Game::setDifficulty(std::string diff) {
     difficulty = diff;
+}
+
+void Game::setLives(int lives) {
+    this->lives = lives;
 }

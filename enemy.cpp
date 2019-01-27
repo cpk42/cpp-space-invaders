@@ -6,12 +6,13 @@ Enemy::Enemy(WINDOW* win, int row, int col, char c, int d) {
     col_location = col;
     character = c;
     direction = d;
+    valid = 1;
     
     getmaxyx(cur_win, row_max, col_max);
 }
 
 Enemy::~Enemy(void) {
-    
+    delete this;
 }
 
 void Enemy::moveUp() {
@@ -34,7 +35,7 @@ void Enemy::moveRight() {
     col_location = ++col_location > col_max - 2 ? col_max - 2 : col_location;
 }
 
-void Enemy::display() {
+void Enemy::display(Game* g) {
     getmaxyx(cur_win, row_max, col_max);
     if (row_location >= row_max)
         row_location = row_max - row_location;
@@ -47,7 +48,38 @@ void Enemy::display() {
         moveDown();
     }
 
+    if (row_location == row_max - 2)
+    {
+        g->setLives(g->getLives() - 1);
+        valid = 0;
+        deathAnimation();
+        return;
+    }
     mvwaddch(cur_win, row_location, col_location, character);
+}
+
+void Enemy::deathAnimation() {
+    wattron(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, 'X');
+    wrefresh(cur_win);
+    usleep(100000);
+    wattroff(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, ' ');
+    wrefresh(cur_win);
+    usleep(100000);
+    wattron(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, 'X');
+    wrefresh(cur_win);
+    usleep(100000);
+    wattroff(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, ' ');
+    wrefresh(cur_win);
+    usleep(100000);
+    wattron(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, 'X');
+    wrefresh(cur_win);
+    wattroff(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, ' ');    
 }
 
 int Enemy::getRow() {
@@ -56,4 +88,8 @@ int Enemy::getRow() {
 
 int Enemy::getCol() {
     return col_location;
+}
+
+int Enemy::isValid() {
+    return valid;
 }

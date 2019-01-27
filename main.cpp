@@ -12,22 +12,19 @@ int main(void)
     Menu* m = new Menu();
     g->setDifficulty(m->selectDifficulty());
     Player* p = new Player(g->getGameWin(), g->getRowMax() - 1, g->getColMax() / 2, '^');
-    Enemy* e = new Enemy(g->getGameWin(), 1, 1, '*', 1);
-    //Enemy *e_arr[20];
-    // for (int i = 0; i < 20; i ++)
-    //     e_arr[i] = new Enemy(g->getGameWin(), 1, i * 2, 'o', 1);
-    // Enemy* e = new Enemy(g->getGameWin(), 1, 5, 'o', 1);
-    // Enemy* e1 = new Enemy(g->getGameWin(), 1, 7, 'o', 1);
-    
+    Enemy *e_arr[1];
+    for (int i = 0; i < 1; i ++)
+        e_arr[i] = new Enemy(g->getGameWin(), 1, i * 2, 'o', 1); 
     do {
-       // for (int i = 0; i < 20; i++) {
-            // e->display();
-            // e_arr[i]->display();
-            // wrefresh(g->getGameWin());
-       // }
-        g->checkResize();
-        e->display();
+       for (int i = 0; i < 1; i++) {
+            if (e_arr[i]->isValid())
+                e_arr[i]->display(g);
+       }
         p->display();
+        g->checkResize();
+        if (g->getLives() == 0) {
+            break;
+        }
     } while(p->getMove() != 'x');
 
     delete g;
