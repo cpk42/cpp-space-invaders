@@ -6,6 +6,7 @@ Game::Game(std::string diff) {
     lives = 3;
     difficulty = diff;
     score = 0;
+    direction = 1;
 
     // init ncurses
     initscr();
@@ -15,7 +16,11 @@ Game::Game(std::string diff) {
 
     // Colors
     start_color();
+    init_color(COLOR_CYAN, 1000, 700, 0); // Redefinition for orange
     init_pair(1, COLOR_WHITE, COLOR_RED);
+    init_pair(2, COLOR_RED, COLOR_RED);
+    init_pair(3, COLOR_YELLOW, COLOR_YELLOW);
+    init_pair(4, COLOR_CYAN, COLOR_CYAN);
 
     // get screen dimensions
     getmaxyx(stdscr, rowMax, colMax);
@@ -84,7 +89,6 @@ void Game::checkResize(void) {
         drawBorders(displayWin);
     }
 
-    // draw to our windows
     mvwprintw(displayWin, 1, 1, "Score: %i", score);
     mvwprintw(displayWin, 1, (colMax / 2) - 10, "Difficulty: %s", difficulty.c_str());
     mvwprintw(displayWin, 1, colMax - 10, "Lives: %i", lives);
@@ -92,6 +96,32 @@ void Game::checkResize(void) {
     // refresh each window
     wrefresh(gameWin);
     wrefresh(displayWin);
+}
+
+void Game::deathScreen(void) {
+    int max_row, max_col;
+
+    wattron(stdscr, COLOR_PAIR(2));
+
+    getmaxyx(stdscr, max_row, max_col);
+
+    for (int i = 0; i < max_row; i++) {
+        for (int j = 0; j < max_col; j++) {
+              mvwprintw(stdscr, i, j, " ");
+        }
+        wrefresh(stdscr);
+        usleep(25000);
+    }
+    wattron(stdscr, COLOR_PAIR(1));
+
+    int row = rowMax / 2 - 5;
+    int col = colMax / 2 - 30;
+    mvprintw(row, col, "   ______                                                  ");
+    mvprintw(++row, col, "  / ____/____ _ ____ ___   ___     ____  _   __ ___   _____");
+    mvprintw(++row, col, " / / __ / __ `// __ `__ \\ / _ \\   / __ \\| | / // _ \\ / ___/");
+    mvprintw(++row, col, "/ /_/ // /_/ // / / / / //  __/  / /_/ /| |/ //  __// /    ");
+    mvprintw(++row, col, "\\____/ \\__,_//_/ /_/ /_/ \\___/   \\____/ |___/ \\___//_/     ");
+    mvprintw(++row, col + 10, "Final score: %i. Press any key to exit", score);
 }
 
 int Game::getRowMax(void) {
@@ -106,10 +136,31 @@ int Game::getLives(void) {
     return lives;
 }
 
+int Game::getGameSpeed(void) {
+    return gameSpeed;
+}
+
+int Game::getDirection(void) {
+    return direction;
+}
+
+int Game::getScore(void) {
+    return score;
+}
+
 void Game::setDifficulty(std::string diff) {
     difficulty = diff;
+    gameSpeed = (difficulty == "easy" ? 75000 : difficulty == "medium" ? 50000 : 25000);
 }
 
 void Game::setLives(int lives) {
     this->lives = lives;
+}
+
+void Game::setDirection(int dir) {
+    direction = dir;
+}
+
+void Game::setScore(int s) {
+    score = s;
 }

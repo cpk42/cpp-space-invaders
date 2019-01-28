@@ -16,6 +16,7 @@ class Player {
         void display();
         void shoot();
         void fire();
+        void reset();
 
         int getRow();
         int getCol();

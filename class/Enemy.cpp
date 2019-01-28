@@ -12,7 +12,7 @@ Enemy::Enemy(WINDOW* win, int row, int col, char c, int d) {
 }
 
 Enemy::~Enemy(void) {
-    delete this;
+
 }
 
 void Enemy::moveUp() {
@@ -35,29 +35,45 @@ void Enemy::moveRight() {
     col_location = ++col_location > col_max - 2 ? col_max - 2 : col_location;
 }
 
-void Enemy::display(Game* g) {
+void Enemy::display(Game* g, Enemy *arr[60], Player *player) {
     getmaxyx(cur_win, row_max, col_max);
     if (row_location >= row_max)
         row_location = row_max - row_location;
     if (col_location >= col_max)
         col_location = col_max - col_location;
-    direction == 1 ? moveRight() : moveLeft();
+    g->getDirection() == 1 ? moveRight() : moveLeft();
 
     if (col_location == col_max - 2 || col_location == 1) {
-        direction *= -1;
-        moveDown();
+        g->setDirection(g->getDirection() * -1);
+        for (int i = 0; i < 60; i++)
+        {
+            arr[i]->moveDown();
+        }
+        moveRight();
+        moveRight();
     }
+
+    if (g->getLives() <= 0)
+        return;
+
     if (row_location == row_max - 2 || mvwinch(cur_win, row_location, col_location) == 'x')
     {
+        g->setScore(g->getScore() + 1);
+        valid = 0;
+        bottomRowAnimation();
+        return;
+    }
+    if (row_location == player->getRow() && col_location == player->getCol()) {
         g->setLives(g->getLives() - 1);
         valid = 0;
-        deathAnimation();
+        collisionAnimation();
+        player->reset();
         return;
     }
     mvwaddch(cur_win, row_location, col_location, character);
 }
 
-void Enemy::deathAnimation() {
+void Enemy::bottomRowAnimation() {
     wattron(cur_win, COLOR_PAIR(1));
     mvwaddch(cur_win, row_location, col_location, 'X');
     wrefresh(cur_win);
@@ -78,7 +94,52 @@ void Enemy::deathAnimation() {
     mvwaddch(cur_win, row_location, col_location, 'X');
     wrefresh(cur_win);
     wattroff(cur_win, COLOR_PAIR(1));
-    mvwaddch(cur_win, row_location, col_location, ' ');
+    mvwaddch(cur_win, row_location, col_location, ' ');    
+}
+
+void Enemy::collisionAnimation() {
+    for (int i = 1; i < 4; i++) {
+        usleep(75000);
+        mvwaddch(cur_win, row_location, col_location, ' ');
+        mvwaddch(cur_win, row_location, col_location - i, ' ');
+        mvwaddch(cur_win, row_location, col_location + i, ' ');
+        mvwaddch(cur_win, row_location - i, col_location, ' ');
+        mvwaddch(cur_win, row_location + i, col_location, ' ');
+        wrefresh(cur_win);
+        usleep(75000);
+        mvwaddch(cur_win, row_location, col_location, ' ');
+        mvwaddch(cur_win, row_location, col_location - i, ' ');
+        mvwaddch(cur_win, row_location, col_location + i, ' ');
+        mvwaddch(cur_win, row_location - i, col_location, ' ');
+        mvwaddch(cur_win, row_location + i, col_location, ' ');
+        wrefresh(cur_win);
+        usleep(75000);
+        wattron(cur_win, COLOR_PAIR(4));
+        mvwaddch(cur_win, row_location, col_location, ' ');
+        mvwaddch(cur_win, row_location, col_location - i, ' ');
+        mvwaddch(cur_win, row_location, col_location + i, ' ');
+        mvwaddch(cur_win, row_location - i, col_location, ' ');
+        mvwaddch(cur_win, row_location + i, col_location, ' ');
+        wrefresh(cur_win);
+        usleep(75000);
+        wattron(cur_win, COLOR_PAIR(2));
+        mvwaddch(cur_win, row_location, col_location, ' ');
+        mvwaddch(cur_win, row_location, col_location - i, ' ');
+        mvwaddch(cur_win, row_location, col_location + i, ' ');
+        mvwaddch(cur_win, row_location - i, col_location, ' ');
+        mvwaddch(cur_win, row_location + i, col_location, ' ');
+        wrefresh(cur_win);
+        usleep(75000);
+    }
+    wattroff(cur_win, COLOR_PAIR(2));
+    for (int i = 1; i < 4; i++) {
+        mvwaddch(cur_win, row_location, col_location, ' ');
+        mvwaddch(cur_win, row_location, col_location - i, ' ');
+        mvwaddch(cur_win, row_location, col_location + i, ' ');
+        mvwaddch(cur_win, row_location - i, col_location, ' ');
+        mvwaddch(cur_win, row_location + i, col_location, ' ');
+    }
+    wrefresh(cur_win);
 }
 
 int Enemy::getRow() {

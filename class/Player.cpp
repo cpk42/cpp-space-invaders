@@ -10,7 +10,7 @@ Player::Player(WINDOW* win, int row, int col, char c) {
 
     getmaxyx(cur_win, row_max, col_max);
     keypad(cur_win, true);
-    halfdelay(1);
+    //halfdelay(1);
 }
 
 Player::~Player(void) {
@@ -90,6 +90,15 @@ int Player::getRow() {
 
 int Player::getCol() {
     return col_location;
+}
+
+void Player::reset(void) {
+
+    int max_row, max_col;
+    
+    getmaxyx(cur_win, max_row, max_col);
+    row_location = max_row - 2;
+    col_location = max_col / 2;
 }
 
 int Player::isShooting() {

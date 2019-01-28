@@ -12,9 +12,11 @@ class Enemy {
         void moveDown();
         void moveLeft();
         void moveRight();
-        void display(Game* g);
+        void display(Game* g, Enemy *arr[60], Player *player);
         void moveSideToSide();
-        void deathAnimation();
+        
+        void collisionAnimation();
+        void bottomRowAnimation();
 
         int getRow(void);
         int getCol(void);

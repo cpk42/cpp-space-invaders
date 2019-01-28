@@ -9,7 +9,7 @@ Projectile::Projectile(WINDOW* win, int row, int col, char c) {
     next = NULL;
 
     getmaxyx(cur_win, row_max, col_max);
-    halfdelay(1);
+    //halfdelay(1);
 }
 
 Projectile::~Projectile(void) {
@@ -25,8 +25,8 @@ Projectile::~Projectile(void) {
 void Projectile::fire() {
   mvwaddch(cur_win, row_location - 1, col_location, 'x');
   mvwaddch(cur_win, row_location, col_location, ' ');
-  if (row_location-1 > 1)
+  if (row_location-1 > 0)
     row_location = row_location-1;
   else
-    mvwaddch(cur_win, row_location-1, col_location, ' ');
+    mvwaddch(cur_win, row_location - 1, col_location, '-');
 }
