@@ -121,7 +121,7 @@ void Game::deathScreen(void) {
     mvprintw(++row, col, " / / __ / __ `// __ `__ \\ / _ \\   / __ \\| | / // _ \\ / ___/");
     mvprintw(++row, col, "/ /_/ // /_/ // / / / / //  __/  / /_/ /| |/ //  __// /    ");
     mvprintw(++row, col, "\\____/ \\__,_//_/ /_/ /_/ \\___/   \\____/ |___/ \\___//_/     ");
-    mvprintw(++row, col + 10, "Final score: %i. Press any key to exit", score);
+    mvprintw(++row, col + 10, "Final score: %i. Press enter to exit", score);
 }
 
 int Game::getRowMax(void) {

@@ -22,6 +22,7 @@ int main(void)
 
     srand(0);
     int clock = 0;
+    int done;
 
     Game* g = new Game("easy");
     Menu* m = new Menu();
@@ -31,24 +32,28 @@ int main(void)
     mediumFormation(e_arr, g);
     nodelay(g->getGameWin(), true);
     do {
-       for (int i = 0; i < 60; i++) {
-            if (e_arr[i]->isValid())
+        done = 1;
+        for (int i = 0; i < 60; i++) {
+            if (e_arr[i]->isValid()) {
                 e_arr[i]->display(g, e_arr, p);
-       }
+                done = 0;
+            }    
+        }
        // while (p->isShooting())
        //  p->fire();
         p->display();
         g->checkResize();
-        if (g->getLives() <= 0)
+        if (g->getLives() <= 0 || done)
             break;
         if (clock % 10 == 0 && clock < 100)
             g->drawBorders(g->getGameWin());
         clock++;
+        
         usleep(g->getGameSpeed());
     } while(p->getMove() != 'x');
     
     g->deathScreen();
-    getch();
+    while (getch() != 10);
 
     delete g;
 
