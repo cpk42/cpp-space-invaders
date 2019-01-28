@@ -56,11 +56,11 @@ void Enemy::display(Game* g, Enemy *arr[60], Player *player) {
     if (g->getLives() <= 0)
         return;
 
-    if (row_location == row_max - 2 || mvwinch(cur_win, row_location, col_location) == 'x')
+    if (mvwinch(cur_win, row_location, col_location) == 'x')
     {
         g->setScore(g->getScore() + 1);
         valid = 0;
-        bottomRowAnimation();
+        hitAnimation();
         return;
     }
     if (row_location == player->getRow() && col_location == player->getCol()) {
@@ -68,6 +68,13 @@ void Enemy::display(Game* g, Enemy *arr[60], Player *player) {
         valid = 0;
         collisionAnimation();
         player->reset();
+        return;
+    }
+    if (row_location == row_max - 2)
+    {
+        g->setLives(g->getLives() - 1);
+        valid = 0;
+        bottomRowAnimation();
         return;
     }
     mvwaddch(cur_win, row_location, col_location, character);
@@ -107,6 +114,7 @@ void Enemy::collisionAnimation() {
         mvwaddch(cur_win, row_location + i, col_location, ' ');
         wrefresh(cur_win);
         usleep(75000);
+        wattron(cur_win, COLOR_PAIR(3));
         mvwaddch(cur_win, row_location, col_location, ' ');
         mvwaddch(cur_win, row_location, col_location - i, ' ');
         mvwaddch(cur_win, row_location, col_location + i, ' ');
@@ -140,6 +148,17 @@ void Enemy::collisionAnimation() {
         mvwaddch(cur_win, row_location + i, col_location, ' ');
     }
     wrefresh(cur_win);
+}
+
+void Enemy::hitAnimation(void) {
+    wattron(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, 'X');
+    wrefresh(cur_win);
+    usleep(25000);
+    wattroff(cur_win, COLOR_PAIR(1));
+    mvwaddch(cur_win, row_location, col_location, ' ');
+    wrefresh(cur_win);
+    usleep(25000);
 }
 
 int Enemy::getRow() {

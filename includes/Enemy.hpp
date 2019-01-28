@@ -14,9 +14,10 @@ class Enemy {
         void moveRight();
         void display(Game* g, Enemy *arr[60], Player *player);
         void moveSideToSide();
-        
+
         void collisionAnimation();
         void bottomRowAnimation();
+        void hitAnimation();
 
         int getRow(void);
         int getCol(void);
