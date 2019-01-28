@@ -16,6 +16,19 @@ Menu::~Menu(void) {
     endwin();
 }
 
+Menu::Menu(Menu &other) {
+    *this = other;
+}
+
+Menu& Menu::operator=(Menu const &rhs) {
+    if (this != &rhs) {
+        menuWin = rhs.menuWin;
+        colMax = rhs.colMax;
+        rowMax = rhs.rowMax;
+    }
+    return *this;
+}
+
 void Menu::printEasy() {
     int row = rowMax / 2 - 5;
     int col = colMax / 2 - 18;

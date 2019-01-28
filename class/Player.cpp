@@ -1,5 +1,9 @@
 #include <Invaders.hpp>
 
+Player::Player(void) {
+
+}
+
 Player::Player(WINDOW* win, int row, int col, char c) {
     cur_win = win;
     row_location = row;
@@ -15,6 +19,24 @@ Player::Player(WINDOW* win, int row, int col, char c) {
 
 Player::~Player(void) {
 
+}
+
+Player::Player(Player &other) {
+    *this = other;
+}
+
+Player& Player::operator=(Player const &rhs) {
+    if (this != &rhs) {
+        row_location = rhs.row_location;
+        col_location = rhs.col_location;
+        row_max = rhs.row_max;
+        col_max = rhs.col_max;
+        is_shooting = rhs.is_shooting;
+        character = rhs.character;
+        cur_win = rhs.cur_win;
+        projectile = rhs.projectile;
+    }
+    return *this;
 }
 
 void Player::moveUp() {

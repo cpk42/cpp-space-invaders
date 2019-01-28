@@ -1,5 +1,9 @@
 #include <Invaders.hpp>
 
+Projectile::Projectile(void) {
+
+}
+
 Projectile::Projectile(WINDOW* win, int row, int col, char c) {
     cur_win = win;
     row_location = row;
@@ -19,6 +23,24 @@ Projectile::~Projectile(void) {
   character = ' ';
   is_shooting = 0;
   next = NULL;
+}
+
+Projectile::Projectile(Projectile &other) {
+    *this = other;
+}
+
+Projectile& Projectile::operator=(Projectile const &rhs) {
+    if (this != &rhs) {
+      row_location = rhs.row_location;
+      col_location = rhs.col_location;
+      row_max = rhs.row_max;
+      col_max = rhs.col_max;
+      character = rhs.character;
+      cur_win = rhs.cur_win;
+      is_shooting = rhs.is_shooting;
+      next = rhs.next;
+    }
+    return *this;
 }
 
 

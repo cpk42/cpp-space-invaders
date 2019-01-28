@@ -1,5 +1,9 @@
 #include <Invaders.hpp>
 
+Enemy::Enemy(void) {
+
+}
+
 Enemy::Enemy(WINDOW* win, int row, int col, char c, int d) {
     cur_win = win;
     row_location = row;
@@ -13,6 +17,25 @@ Enemy::Enemy(WINDOW* win, int row, int col, char c, int d) {
 
 Enemy::~Enemy(void) {
 
+}
+
+        
+Enemy::Enemy(Enemy &other) {
+    *this = other;
+}
+
+Enemy& Enemy::operator=(Enemy const &rhs) {
+    if (this != &rhs) {
+        row_location = rhs.row_location;
+        col_location = rhs.col_location;
+        row_max = rhs.col_location;
+        col_max = rhs.col_location;
+        character = rhs.character;
+        direction = rhs.direction;
+        valid = rhs.valid;
+        cur_win = rhs.cur_win;
+    }
+    return *this;
 }
 
 void Enemy::moveUp() {

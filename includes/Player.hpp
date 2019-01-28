@@ -5,8 +5,11 @@
 
 class Player {
     public:
+        Player(void);
         Player(WINDOW* win, int row, int col, char c);
         ~Player(void);
+        Player(Player &other);
+        Player &operator=(Player const &rhs);
 
         void moveUp();
         void moveDown();

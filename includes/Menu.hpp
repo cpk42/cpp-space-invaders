@@ -7,6 +7,8 @@ class Menu {
     public:
         Menu(void);
         ~Menu(void);
+        Menu(Menu &other);
+        Menu &operator=(Menu const &rhs);
 
         std::string selectDifficulty(void);
         void printEasy(void);

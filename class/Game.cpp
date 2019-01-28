@@ -1,5 +1,9 @@
 #include <Invaders.hpp>
 
+Game::Game(void) {
+    
+}
+
 Game::Game(std::string diff) {
 
     displaySize = 3;
@@ -34,6 +38,26 @@ Game::Game(std::string diff) {
 
 Game::~Game(void) {
     endwin();
+}
+
+Game::Game(Game &other) {
+    *this = other;
+}
+
+Game& Game::operator=(Game const &rhs) {
+    if (this != &rhs) {
+        colMax = rhs.colMax;
+        rowMax = rhs.rowMax;
+        lives = rhs.lives;
+        score = rhs.score;
+        displaySize = rhs.displaySize;
+        gameSpeed = rhs.gameSpeed;
+        direction = rhs.direction;
+        difficulty = rhs.difficulty;
+        gameWin = rhs.gameWin;
+        displayWin = rhs.displayWin;
+    }
+    return *this;
 }
 
 WINDOW* Game::getGameWin(void) {

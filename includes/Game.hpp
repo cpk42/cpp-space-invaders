@@ -5,8 +5,11 @@
 
 class Game {
     public:
+        Game(void);
         Game(std::string difficulty);
         ~Game(void);
+        Game(Game &other);
+        Game &operator=(Game const &rhs);
 
         WINDOW* getGameWin(void);
         WINDOW* getDisplayWin(void);

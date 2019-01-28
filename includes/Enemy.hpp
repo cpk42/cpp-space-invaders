@@ -5,8 +5,11 @@
 
 class Enemy {
     public:
+        Enemy(void);
         Enemy(WINDOW* win, int row, int col, char c, int d);
+        Enemy(Enemy &other);
         ~Enemy(void);
+        Enemy &operator=(Enemy const &rhs);
 
         void moveUp();
         void moveDown();
