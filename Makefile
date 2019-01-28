@@ -26,10 +26,7 @@ CC = g++
 CFLAG = -c
 WFLAG = -Wall -Wextra -Werror
 
-NAME = ft_retro
-
-#.PHONY: all clean fclean re
-#.SUFFIXES: .c .o
+NAME = invaders
 
 all: $(NAME)
 

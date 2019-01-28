@@ -1,9 +1,6 @@
 #include <Invaders.hpp>
 
-// Add to game class later
-#define GAME_SPEED 75000
-
-void mediumFormation(Enemy* e_arr[], Game *g) {
+void makeFormation(Enemy* e_arr[], Game *g) {
     char enemies[4] = {'o', 'O', '0', '@'};
     for (int i = 0; i < 20; i++) {
         e_arr[i] = new Enemy(g->getGameWin(), 1, (i + 1) * 3, enemies[rand() % 4], 1);
@@ -29,7 +26,7 @@ int main(void)
     g->setDifficulty(m->selectDifficulty());
     Player* p = new Player(g->getGameWin(), g->getRowMax() - 1, g->getColMax() / 2, '^');
     Enemy *e_arr[60];
-    mediumFormation(e_arr, g);
+    makeFormation(e_arr, g);
     nodelay(g->getGameWin(), true);
     do {
         done = 1;
